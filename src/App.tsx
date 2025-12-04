@@ -1238,7 +1238,12 @@ function AppContent(): JSX.Element {
           suppliers={mockSuppliers}
           onClose={() => setShowStockReceiving(false)}
           onReceiveStock={handleReceiveStock}
-          pendingPOs={purchaseOrders.filter(p => p.status !== 'received')}
+          // Only show purchase orders that still have outstanding quantities and are not final
+          pendingPOs={purchaseOrders.filter(p =>
+            !['received', 'cancelled', 'draft'].includes(p.status) &&
+            // at least one item still has remaining quantity to receive
+            p.items.some(i => (i.receivedQty || 0) < i.quantity)
+          )}
           onReceivePO={handleReceivePO}
         />
       )}
