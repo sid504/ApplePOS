@@ -112,19 +112,19 @@ const Header: React.FC<HeaderProps> = ({
 
       {isOpen && (
         <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-          {items.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                item.onClick();
-                onToggle();
-              }}
-              className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 hover:bg-gray-100 transition-colors"
-            >
-              <item.icon className="w-4 h-4" />
-              <span className="text-sm">{item.label}</span>
-            </button>
-          ))}
+            {items.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  item.onClick?.();
+                  onToggle();
+                }}
+                className="w-full flex items-center space-x-2 px-4 py-2 text-left text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <item.icon className="w-4 h-4" />
+                <span className="text-sm">{item.label}</span>
+              </button>
+            ))}
         </div>
       )}
     </div>
@@ -254,6 +254,7 @@ const Header: React.FC<HeaderProps> = ({
                     setShowInventoryDropdown(!showInventoryDropdown);
                     setShowManagementDropdown(false);
                   }}
+                  containerRef={inventoryRef}
                   label="Inventory"
                 />
               )}
@@ -265,6 +266,7 @@ const Header: React.FC<HeaderProps> = ({
                   setShowManagementDropdown(!showManagementDropdown);
                   setShowInventoryDropdown(false);
                 }}
+                containerRef={managementRef}
                 label="Management"
               />
 
